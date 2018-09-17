@@ -4,26 +4,53 @@ import './index.css'
 
 export default class Index extends Component {
 
-  config = {
-    navigationBarTitleText: '首页'
-  }
+	config = {
+		navigationBarTitleText: '首页'
+	}
 
-  componentWillMount() { }
+	constructor(props) {
+		super(props);
+		this.state = {
+			moduleList: []
+		}
+	}
 
-  componentDidMount() { }
+	componentWillMount() { }
 
-  componentWillUnmount() { }
+	componentDidMount() {
+		Taro.request({
+			url: '//localhost:3000',
+			method: "GET",
+		}).then(result => {
+			const moduleList = result.data.data.pageModuleList;
+			this.setState({
+				moduleList,
+			});
+		})
 
-  componentDidShow() { }
+	}
 
-  componentDidHide() { }
+	componentWillUnmount() { }
 
-  render() {
-    return (
-      <View className='index'>
-        <Text>Hello world!!12321313!</Text>
-      </View>
-    )
-  }
+	componentDidShow() { }
+
+	componentDidHide() { }
+
+	renderModules(moduleList) {
+		console.log(moduleList);
+		return moduleList.map(v => {
+			return <View>321312</View>
+		})
+	}
+
+	render() {
+		const { moduleList } = this.state;
+		return (
+			<View className='index'>
+				<Text>Hello world!!12321313!</Text>
+				{this.renderModules(moduleList)}
+			</View>
+		)
+	}
 }
 
